@@ -1,34 +1,28 @@
 @import "tailwindcss";
-@import "tw-animate-css" layer(utilities);
 
 /* ---------------------------------------------------------------
    ZIRAK STREAM — DESIGN TOKENS
-   Deep black canvas, golden-yellow / warm-orange accent gradient,
-   white typography, glass surfaces. RTL-first (Sorani Kurdish).
 ---------------------------------------------------------------- */
+
 @theme {
   --font-display: var(--font-vazirmatn), "Vazirmatn", system-ui, sans-serif;
   --font-body: var(--font-vazirmatn), "Vazirmatn", system-ui, sans-serif;
   --font-latin: var(--font-inter), "Inter", system-ui, sans-serif;
 
-  /* Core surfaces */
   --color-canvas: #050505;
   --color-surface: #0e0e10;
   --color-surface-raised: #161618;
   --color-border: #232326;
 
-  /* Brand accent */
   --color-gold: #ffb800;
   --color-gold-soft: #ffd166;
   --color-ember: #ff6b00;
   --color-ember-soft: #ff8c3d;
 
-  /* Text */
   --color-ink: #ffffff;
   --color-ink-muted: #a8a8ad;
   --color-ink-faint: #6b6b70;
 
-  /* Feedback */
   --color-success: #22c55e;
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
@@ -46,20 +40,14 @@
     color-scheme: dark;
   }
 
-  html[dir="rtl"] body {
-    font-family: var(--font-body);
-  }
-
   body {
-    background-color: var(--color-canvas);
+    background: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  /* Latin metadata (titles in original language, actor names, years) stays LTR
-     even inside an RTL document, per project convention. */
   .ltr-inline {
     direction: ltr;
     unicode-bidi: isolate;
@@ -68,7 +56,7 @@
   }
 
   ::selection {
-    background-color: var(--color-gold);
+    background: var(--color-gold);
     color: #111;
   }
 
@@ -81,13 +69,16 @@
     width: 10px;
     height: 10px;
   }
+
   ::-webkit-scrollbar-track {
     background: var(--color-canvas);
   }
+
   ::-webkit-scrollbar-thumb {
     background: var(--color-surface-raised);
-    border-radius: 999px;
+    border-radius: 9999px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-border);
   }
@@ -95,27 +86,35 @@
 
 @layer utilities {
   .bg-brand-gradient {
-    background-image: linear-gradient(135deg, var(--color-gold) 0%, var(--color-ember) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-gold) 0%,
+      var(--color-ember) 100%
+    );
   }
 
   .text-brand-gradient {
-    background-image: linear-gradient(135deg, var(--color-gold) 0%, var(--color-ember) 100%);
-    background-clip: text;
+    background: linear-gradient(
+      135deg,
+      var(--color-gold) 0%,
+      var(--color-ember) 100%
+    );
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
   }
 
   .glass-panel {
-    background-color: rgb(14 14 16 / 0.55);
+    background: rgb(14 14 16 / 55%);
     backdrop-filter: blur(20px) saturate(140%);
     -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border: 1px solid rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 8%);
   }
 
   .glass-panel-raised {
-    background-color: rgb(22 22 24 / 0.65);
+    background: rgb(22 22 24 / 65%);
     backdrop-filter: blur(24px) saturate(160%);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid rgb(255 255 255 / 0.1);
+    border: 1px solid rgb(255 255 255 / 10%);
   }
 }
