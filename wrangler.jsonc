@@ -1,0 +1,13 @@
+{
+  "name": "zirak-stream",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-01-01",
+
+  "assets": {
+    "directory": ".open-next/assets"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
