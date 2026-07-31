@@ -4,6 +4,12 @@ import { NextResponse, type NextRequest } from "next/server";
 const PUBLIC_ROUTES = ["/login", "/register", "/forgot-password", "/auth"];
 const ADMIN_ROUTE_PREFIX = "/admin";
 
+type CookieToSet = {
+  name: string;
+  value: string;
+  options?: Parameters<NextResponse["cookies"]["set"]>[2];
+};
+
 function isPublicRoute(pathname: string) {
   if (pathname === "/") return true;
   return PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
@@ -21,15 +27,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
 
-        setAll(
-          cookiesToSet: {
-            name: string;
-            value: string;
-            options?: Parameters<
-              typeof supabaseResponse.cookies.set
-            >[2];
-          }[],
-        ) {
+        setAll(cookiesToSet: CookieToSet[]) {
           for (const { name, value } of cookiesToSet) {
             request.cookies.set(name, value);
           }
