@@ -22,11 +22,13 @@ export async function updateSession(request: NextRequest) {
         },
 
         setAll(
-          cookiesToSet: Array<{
+          cookiesToSet: {
             name: string;
             value: string;
-            options?: Parameters<typeof supabaseResponse.cookies.set>[2];
-          }>,
+            options?: Parameters<
+              typeof supabaseResponse.cookies.set
+            >[2];
+          }[],
         ) {
           for (const { name, value } of cookiesToSet) {
             request.cookies.set(name, value);
