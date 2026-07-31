@@ -9,16 +9,6 @@ function isPublicRoute(pathname: string) {
   return PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
 }
 
-/**
- * Refreshes the Supabase auth session on every request and enforces
- * route-level access rules:
- *   - unauthenticated users are redirected to /login for protected routes
- *   - non-admins are redirected away from /admin/**
- *
- * IMPORTANT: keep the `supabaseResponse` object as the return value so the
- * refreshed auth cookies actually reach the browser. Never strip cookies
- * from it or construct a fresh NextResponse after calling getUser().
- */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -30,11 +20,20 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+
+        setAll(
+          cookiesToSet: Array<{
+            name: string;
+            value: string;
+            options?: Parameters<typeof supabaseResponse.cookies.set>[2];
+          }>,
+        ) {
           for (const { name, value } of cookiesToSet) {
             request.cookies.set(name, value);
           }
+
           supabaseResponse = NextResponse.next({ request });
+
           for (const { name, value, options } of cookiesToSet) {
             supabaseResponse.cookies.set(name, value, options);
           }
@@ -43,8 +42,6 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  // Do not run any logic between createServerClient and getUser().
-  // A stray return here would silently break session refresh.
   const {
     data: { user },
   } = await supabase.auth.getUser();
